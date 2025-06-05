@@ -1,0 +1,168 @@
+<!-- src/app/ferias/ferias.component.html -->
+<div class="container mt-4">
+  <h2 class="mb-4">Gestão de Férias</h2>
+
+  <!-- Formulário Reativo de Férias -->
+  <div class="card mb-5">
+    <div class="card-header bg-primary text-white">
+      <strong>{{ isEditando ? 'Editar Férias' : 'Nova Férias' }}</strong>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="formFerias" (ngSubmit)="onSalvar()">
+        <input type="hidden" formControlName="id" />
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="funcionarioId" class="form-label">Funcionário</label>
+            <select
+              id="funcionarioId"
+              class="form-select"
+              formControlName="funcionarioId"
+            >
+              <option value="">Selecione</option>
+              <option *ngFor="let f of listaFuncionarios" [value]="f.id">
+                {{ f.nome }}
+              </option>
+            </select>
+            <div
+              *ngIf="formFerias.get('funcionarioId')?.invalid && formFerias.get('funcionarioId')?.touched"
+              class="text-danger mt-1"
+            >
+              Funcionário obrigatório.
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label for="dataInicio" class="form-label">Data de Início</label>
+            <input
+              type="date"
+              id="dataInicio"
+              class="form-control"
+              formControlName="dataInicio"
+            />
+            <div
+              *ngIf="formFerias.get('dataInicio')?.invalid && formFerias.get('dataInicio')?.touched"
+              class="text-danger mt-1"
+            >
+              Data de início obrigatória.
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label for="dataTermino" class="form-label">Data de Término</label>
+            <input
+              type="date"
+              id="dataTermino"
+              class="form-control"
+              formControlName="dataTermino"
+            />
+            <div
+              *ngIf="formFerias.get('dataTermino')?.invalid && formFerias.get('dataTermino')?.touched"
+              class="text-danger mt-1"
+            >
+              Data de término obrigatória.
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <label for="status" class="form-label">Status</label>
+            <select
+              id="status"
+              class="form-select"
+              formControlName="status"
+            >
+              <option value="">Selecione</option>
+              <option value="Pendente">Pendente</option>
+              <option value="Aprovada">Aprovada</option>
+              <option value="Recusada">Recusada</option>
+            </select>
+            <div
+              *ngIf="formFerias.get('status')?.invalid && formFerias.get('status')?.touched"
+              class="text-danger mt-1"
+            >
+              Status obrigatório.
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="formFerias.invalid"
+          >
+            {{ isEditando ? 'Atualizar' : 'Salvar' }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary ms-2"
+            (click)="onCancelar()"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tabela de Férias -->
+  <div class="card">
+    <div class="card-header bg-light">
+      <strong>Lista de Férias</strong>
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-striped mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Funcionário</th>
+            <th>Início</th>
+            <th>Término</th>
+            <th>Status</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fer of listaFerias">
+            <td>{{ fer.id }}</td>
+            <td>{{ getNomeFuncionario(fer.funcionarioId) }}</td>
+            <td>{{ fer.dataInicio | date:'dd/MM/yyyy' }}</td>
+            <td>{{ fer.dataTermino | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <span
+                [ngClass]="{
+                  'badge bg-warning': fer.status === 'Pendente',
+                  'badge bg-success': fer.status === 'Aprovada',
+                  'badge bg-danger': fer.status === 'Recusada'
+                }"
+              >
+                {{ fer.status }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button
+                class="btn btn-sm btn-primary me-2"
+                (click)="onEditar(fer)"
+              >
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-danger"
+                (click)="onExcluir(fer.id)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="listaFerias.length === 0">
+            <td colspan="6" class="text-center text-muted">
+              Nenhuma férias cadastrada.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
