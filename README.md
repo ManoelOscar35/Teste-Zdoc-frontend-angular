@@ -41,7 +41,8 @@ Utiliza Bootstrap 5 para layout e componentes, bem como Bootstrap Icons.
 Angular CLI (global):
 
 npm install -g @angular/cli@16.2.16
-3.3. Configuração inicial
+
+Configuração inicial
 Clone o repositório Angular:
 
 git clone https://github.com/ManoelOscar35/Teste-Zdoc-frontend-angular/.git
