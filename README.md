@@ -25,3 +25,33 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+Página Home com links para Funcionários, Férias, Relatório
+
+Gestão de Funcionários (formulários reativos + lista)
+
+Gestão de Férias (formulários reativos + lista)
+
+Relatório de Funcionários (tabela formatada)
+
+Utiliza Bootstrap 5 para layout e componentes, bem como Bootstrap Icons.
+
+
+Angular CLI (global):
+
+npm install -g @angular/cli@16.2.16
+3.3. Configuração inicial
+Clone o repositório Angular:
+
+git clone https://github.com/ManoelOscar35/Teste-Zdoc-frontend-angular/.git
+cd Teste-Zdoc-frontend-angular
+Instale dependências:
+
+npm install 
+
+Subir o servidor:
+ng serve 
+
+
+
